@@ -27,8 +27,8 @@ export default class MyPlugin extends Plugin {
 		this.registerExtensions(['chat'], VIEW_TYPE_EXAMPLE);
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon("dice", "Sample Plugin", () => {
-			this.activateView();
+		const ribbonIconEl = this.addRibbonIcon("message-circle-heart", "Create new chat", () => {
+			this.createNewChatFile()
 		});
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass("my-plugin-ribbon-class");
@@ -59,7 +59,13 @@ export default class MyPlugin extends Plugin {
 		}
 	}
 
-	onunload() {}
+	createNewChatFile() {
+		const activeFile = this.app.workspace.getActiveFile();
+		const path = (activeFile && activeFile.parent) ? activeFile.parent.path : '';
+		this.app.vault.create(`${path}/Untitled.chat`, '')
+	}
+
+	onunload() { }
 
 	async loadSettings() {
 		this.settings = Object.assign(

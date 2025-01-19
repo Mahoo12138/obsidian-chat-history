@@ -51,9 +51,7 @@ export function Chat({
   className,
   onRateResponse,
 }: ChatProps) {
-  const lastMessage = messages.at(-1)
   const isEmpty = messages.length === 0
-  const isTyping = lastMessage?.role === "user"
 
   const messageOptions = useCallback(
     (message: Message) => ({
@@ -106,15 +104,15 @@ export function Chat({
         <ChatMessages messages={messages}>
           <MessageList
             messages={messages}
-            isTyping={isTyping}
+            isTyping={false}
             messageOptions={messageOptions}
           />
         </ChatMessages>
       ) : null}
 
       <ChatForm
-        className="mt-auto"
-        isPending={isGenerating || isTyping}
+        className="mt-auto fixed bottom-12 left-8 right-8"
+        isPending={isGenerating}
         handleSubmit={handleSubmit}
       >
         {({ files, setFiles }) => (
@@ -150,7 +148,7 @@ export function ChatMessages({
 
   return (
     <div
-      className="grid grid-cols-1 overflow-y-auto pb-4"
+      className="grid grid-cols-1 overflow-y-auto pb-40"
       ref={containerRef}
       onScroll={handleScroll}
       onTouchStart={handleTouchStart}

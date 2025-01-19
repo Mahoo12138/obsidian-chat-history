@@ -8,22 +8,51 @@ export function App() {
 			content: 'Hello World'
 		},
 		{
-			id: '24',
+			id: '23',
+			role: 'assistant',
+			content: 'Hello World2'
+		},
+		{
+			id: '22',
+			role: 'user',
+			content: 'Hello World'
+		},
+		{
+			id: '22',
+			role: 'user',
+			content: 'Hello World'
+		},
+		{
+			id: '25',
+			role: 'assistant',
+			content: 'Hello World2'
+		},
+		{
+			id: '25',
+			role: 'assistant',
+			content: 'Hello World2'
+		},
+		{
+			id: '25',
+			role: 'assistant',
+			content: 'Hello World2'
+		},
+		{
+			id: '25',
+			role: 'assistant',
+			content: 'Hello World2'
+		},
+		{
+			id: '26',
 			role: 'assistant',
 			content: 'Hello World2'
 		}
 	]
 	return (
-		<div className="bg-background-primary min-h-screen p-8">
-			<header className="mb-8">
-				<h1 className="rounded-full">My Application</h1>
-				<p className="text-text-muted text-ui-small">
-					Welcome to your new app
-				</p>
-			</header>
-
-			<main className="space-y-6">
+		<div className="bg-background-primary h-full p-8 flex flex-col">
+			<main className="space-y-6 flex-1">
 				<Chat
+					className="h-full"
 					messages={messages}
 					input={'Please Input'}
 					handleInputChange={() => { }}
