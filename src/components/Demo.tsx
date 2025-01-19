@@ -49,16 +49,17 @@ export function App() {
 		}
 	]
 	return (
-		<div className="bg-background-primary h-full p-8 flex flex-col">
+		<div className="chat-history bg-background-primary h-full p-8 flex flex-col">
+			<div className="bg-red-600 dark:bg-blue-600">------------------------------000--------------------------------</div>
 			<main className="space-y-6 flex-1">
 				<Chat
 					className="h-full"
 					messages={messages}
 					input={'Please Input'}
 					handleInputChange={() => { }}
-					handleSubmit={()=>{}}
+					handleSubmit={() => { }}
 					isGenerating={false}
-					stop={()=> {}}
+					stop={() => { }}
 				/>
 			</main>
 		</div>
