@@ -1,4 +1,4 @@
-import { ExampleView, VIEW_TYPE_EXAMPLE } from "@/views/ExampleView";
+import { ChatView, VIEW_TYPE_EXAMPLE } from "@/views/ChatView";
 import {
 	App,
 	Plugin,
@@ -6,6 +6,7 @@ import {
 	Setting,
 	WorkspaceLeaf,
 } from "obsidian";
+
 import "@/styles.css";
 
 
@@ -17,27 +18,20 @@ const DEFAULT_SETTINGS: MyPluginSettings = {
 	mySetting: "default",
 };
 
-export default class MyPlugin extends Plugin {
+export default class ChatRecordPlugin extends Plugin {
 	settings: MyPluginSettings;
 
 	async onload() {
 		await this.loadSettings();
 
-		this.registerView(VIEW_TYPE_EXAMPLE, (leaf) => new ExampleView(leaf));
+		this.registerView(VIEW_TYPE_EXAMPLE, (leaf) => new ChatView(leaf, this));
 		this.registerExtensions(['chat'], VIEW_TYPE_EXAMPLE);
 
-		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon("message-circle-heart", "Create new chat", () => {
 			this.createNewChatFile()
 		});
-		// Perform additional things with the ribbon
 		ribbonIconEl.addClass("my-plugin-ribbon-class");
 
-		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
-		const statusBarItemEl = this.addStatusBarItem();
-		statusBarItemEl.setText("Status Bar Text");
-
-		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 	}
 
@@ -59,6 +53,9 @@ export default class MyPlugin extends Plugin {
 		}
 	}
 
+	/**
+	 * Creates a new chat file
+	 */
 	createNewChatFile() {
 		const activeFile = this.app.workspace.getActiveFile();
 		const path = (activeFile && activeFile.parent) ? activeFile.parent.path : '';
@@ -81,9 +78,9 @@ export default class MyPlugin extends Plugin {
 }
 
 class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: ChatRecordPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: ChatRecordPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
