@@ -42,8 +42,8 @@ export const MessageItem: React.FC<MessageProps> = ({ message }) => {
     switch (content.type) {
       case 'image':
         return <img src={content.value} alt="Attachment" style={{ maxWidth: '100%' }} />;
-      case 'quote':
-        return <blockquote cite={content.source}>{content.value}</blockquote>;
+      case 'at':
+        return <p>@<span>{content.value}</span></p>;
       default:
         return <p>{content.value}</p>;
     }

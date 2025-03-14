@@ -18,6 +18,7 @@ export interface Message {
   role: "user" | "notification" | "me"
   content: MessageContent
   createdAt?: Date
+  source?: string    // 适用于标注回复哪一条 Message
   attachments?: Attachment[]
   toolInvocations?: ToolInvocation[]
 }
@@ -25,9 +26,8 @@ export interface Message {
 export type MessageContent = string | ContentBlock | ContentBlock[]
 
 export interface ContentBlock {
-  type: "text" | "image" | "quote"
+  type: "text" | "image" | "at"
   value: string
-  source?: string    // 适用于引用类型
 }
 
 interface Attachment {

@@ -1,58 +1,60 @@
-/* 基础容器样式 */
-.avatar-base {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f3f4f6;
-  overflow: hidden;
-}
-
-/* 尺寸控制 */
-.avatar-sm {
-  width: 32px;
-  height: 32px;
-}
-
-.avatar-md {
-  width: 48px;
-  height: 48px;
-}
-
-.avatar-lg {
-  width: 64px;
-  height: 64px;
-}
-
-/* 形状控制 */
-.avatar-circle {
-  border-radius: 50%;
-}
-
-.avatar-square {
+.rich-editor {
+  border: 1px solid #ddd;
   border-radius: 8px;
+  padding: 1rem;
 }
 
-/* 头像图片样式 */
-.avatar-image {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+.toolbar {
+  margin-bottom: 1rem;
 }
 
-/* 回退图标样式 */
-.fallback-icon {
-  width: 60%;
-  height: 60%;
-  color: #6b7280;
+.toolbar button {
+  margin-right: 8px;
+  padding: 4px 12px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-/* 文字回退样式 */
-.fallback-text {
-  font-size: 1.2em;
-  font-weight: 500;
-  color: #374151;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+.editor-content {
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.editor-content:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.inline-image {
+  max-width: 200px;
+  max-height: 150px;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+
+.mention {
+  color: #007bff;
+  background: #e7f3ff;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin: 0 2px;
+}
+
+.footer {
+  text-align: right;
+}
+
+.footer button {
+  background: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
