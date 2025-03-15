@@ -1,0 +1,5 @@
+/* 在ChatPanel组件的CSS中添加 */
+button[aria-label="edit"]:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}

@@ -2,9 +2,10 @@ import { FileView, TFile, WorkspaceLeaf } from "obsidian";
 import { createRoot, Root } from "react-dom/client";
 import { StrictMode } from "react";
 
-import { App } from "@/components/ChatPanel";
+import { ChatPanel } from "@/components/ChatPanel";
 
 import type ChatRecordPlugin from "@/main";
+import { Chat } from "@/lib/type";
 
 export const VIEW_TYPE_EXAMPLE = "example-view";
 
@@ -18,7 +19,7 @@ export class ChatView extends FileView {
 	constructor(leaf: WorkspaceLeaf, plugin: ChatRecordPlugin) {
 		super(leaf);
 		this.plugin = plugin;
-		console.log('ChatView constructor’');
+		console.log("ChatView constructor’");
 	}
 
 	async onLoadFile(file: TFile) {
@@ -29,7 +30,10 @@ export class ChatView extends FileView {
 			const cachedData = this.cache.get(file.path);
 			this.root.render(
 				<StrictMode>
-					<App messages={cachedData.message} />
+					<ChatPanel
+						chat={cachedData}
+						onSave={(content) => this.handleSaveFile(file, content)}
+					/>
 				</StrictMode>
 			);
 			return;
@@ -50,7 +54,10 @@ export class ChatView extends FileView {
 
 			this.root.render(
 				<StrictMode>
-					<App messages={data.message} />
+					<ChatPanel
+						chat={data}
+						onSave={(content) => this.handleSaveFile(file, content)}
+					/>
 				</StrictMode>
 			);
 		} catch (e) {
@@ -64,7 +71,7 @@ export class ChatView extends FileView {
 	}
 
 	getDisplayText() {
-		console.log('getDisplayText');
+		console.log("getDisplayText");
 		return "和XX的聊天记录 - 2023-04-13";
 	}
 
@@ -79,8 +86,14 @@ export class ChatView extends FileView {
 		return Promise.resolve();
 	}
 
-
 	async onClose() {
 		this.root.unmount();
+	}
+
+	handleSaveFile(file: TFile, chat: Chat) {
+		const content = JSON.stringify(chat);
+		this.cache.set(file.path, chat);
+		console.log("handleSaveFile", file, content);
+		this.app.vault.modify(file, content);
 	}
 }

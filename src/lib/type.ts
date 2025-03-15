@@ -3,7 +3,7 @@ export interface Chat {
   title: string
   description?: string
   createdAt: Date
-  messages: Message[]
+  message: Message[]
   status: "active" | "archived" | "deleted",
 }
 

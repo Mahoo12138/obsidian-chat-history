@@ -1,4 +1,111 @@
-.rich-editor {
+/* 基础容器样式 */
+.avatar-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  overflow: hidden;
+}
+
+/* 尺寸控制 */
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+}
+.avatar-md {
+  width: 48px;
+  height: 48px;
+}
+.avatar-lg {
+  width: 64px;
+  height: 64px;
+}
+
+/* 形状控制 */
+.avatar-circle {
+  border-radius: 50%;
+}
+.avatar-square {
+  border-radius: 8px;
+}
+
+/* 头像图片样式 */
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* 回退图标样式 */
+.fallback-icon {
+  width: 60%;
+  height: 60%;
+  color: #6b7280;
+}
+
+/* 文字回退样式 */
+.fallback-text {
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #374151;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}.message-container {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.message-container.user {
+  flex-direction: row;
+}
+
+.message-container.me {
+  flex-direction: row-reverse;
+}
+
+.avatar-content {
+  order: 1;
+}
+
+.message-content {
+  order: 2;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-width: 80%;
+}
+
+
+
+.action-content {
+  order: 3;
+  display: flex;
+  gap: 8px;
+  padding: 0 8px;
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out;
+}
+
+.message-container:hover .action-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.message-container.user .message-content {
+  background: #e3f2fd;
+}
+
+.message-container.me .message-content {
+  background: #f5f5f5;
+}.message-editor {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 1rem;

@@ -5,36 +5,45 @@
 }
 
 .toolbar {
-  display: flex;
-  gap: 8px;
   margin-bottom: 1rem;
 }
 
 .toolbar button {
-  padding: 4px 8px;
+  margin-right: 8px;
+  padding: 4px 12px;
   background: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.content-area {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 1rem;
-}
-
-.block {
-  padding: 6px;
-  background: #f8f8f8;
+.editor-content {
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid #eee;
   border-radius: 4px;
+  margin-bottom: 1rem;
+  line-height: 1.6;
 }
 
-.block input[type="text"] {
-  border: none;
-  background: transparent;
-  min-width: 200px;
+.editor-content:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.inline-image {
+  max-width: 200px;
+  max-height: 150px;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+
+.mention {
+  color: #007bff;
+  background: #e7f3ff;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin: 0 2px;
 }
 
 .footer {
