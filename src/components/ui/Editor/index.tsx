@@ -6,7 +6,10 @@ import "./style.css";
 
 interface MessageEditorProps {
 	message?: Message | null;
-	onSave: (content: MessageContent, id?: string) => void;
+	onSave: (
+		id: string | undefined,
+		payload: { content: MessageContent; createdAt?: Date }
+	) => void;
 }
 
 export const MessageEditor: React.FC<MessageEditorProps> = ({
@@ -20,6 +23,15 @@ export const MessageEditor: React.FC<MessageEditorProps> = ({
 
 	// 在组件顶部新增 ref
 	const savedRangeRef = useRef<Range | null>(null);
+	// 新增时间输入状态
+	const [localCreatedAt, setLocalCreatedAt] = useState(() => {
+		const initialDate = message?.createdAt
+			? new Date(message.createdAt)
+			: new Date();
+		return initialDate instanceof Date && !isNaN(initialDate.getTime())
+			? initialDate
+			: new Date();
+	});
 
 	// 初始化内容转换
 	useEffect(() => {
@@ -30,12 +42,12 @@ export const MessageEditor: React.FC<MessageEditorProps> = ({
 			typeof initialContent === "string"
 				? [{ type: "text", value: initialContent }]
 				: Array.isArray(initialContent)
-					? initialContent.map(item =>
-						typeof item === 'string'
-							? { type: 'text', value: item }
+				? initialContent.map((item) =>
+						typeof item === "string"
+							? { type: "text", value: item }
 							: item
-					)
-					: [initialContent];
+				  )
+				: [initialContent];
 		console.log("parsedBlocks", parsedBlocks);
 		updateEditorContent(parsedBlocks);
 	}, [message]);
@@ -179,8 +191,21 @@ export const MessageEditor: React.FC<MessageEditorProps> = ({
 				? finalBlocks[0].value
 				: finalBlocks;
 
-		onSave(finalContent, message?.id);
+		onSave(message?.id, {
+			content: finalContent,
+			createdAt: localCreatedAt,
+		});
 		if (editorRef.current) editorRef.current.innerHTML = "";
+	};
+
+	const formatDateForInput = (date: Date) => {
+		if (isNaN(date.getTime())) return ""; // 新增有效性检查
+		const pad = (n: number) => n.toString().padStart(2, "0");
+		return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+			date.getDate()
+		)}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
+			date.getSeconds()
+		)}`;
 	};
 
 	return (
@@ -232,7 +257,37 @@ export const MessageEditor: React.FC<MessageEditorProps> = ({
 				}}
 			/>
 
-			<div className="footer">
+			<div
+				className="footer"
+				style={{
+					display: "flex",
+					gap: "12px",
+					alignItems: "center",
+					justifyContent: "space-between",
+					marginTop: "1rem",
+				}}
+			>
+				<input
+					type="datetime-local"
+					value={formatDateForInput(localCreatedAt)}
+					step="1" // 新增 step 属性
+					onChange={(e) => {
+						const value = e.target.value;
+						console.log("value", value);
+						if (!value) return;
+
+						// 直接使用输入值创建 Date 对象
+						const newDate = new Date(value);
+						if (!isNaN(newDate.getTime())) {
+							setLocalCreatedAt(newDate);
+						}
+					}}
+					style={{
+						border: "1px solid #ddd",
+						borderRadius: "4px",
+						fontSize: "14px",
+					}}
+				/>
 				<button onClick={handleSave}>保存</button>
 			</div>
 		</div>

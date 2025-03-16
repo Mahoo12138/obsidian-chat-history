@@ -1,4 +1,4 @@
-import { Message, Chat } from "@/lib/type";
+import { Message, Chat, MessageContent } from "@/lib/type";
 import { MessageItem } from "../ui/MessageItem";
 import { MessageEditor } from "../ui/Editor";
 import { useCallback, useEffect, useState } from "react";
@@ -22,11 +22,11 @@ export function ChatPanel({
 
 	// 修改保存处理函数
 	const handleSaveMessage = useCallback(
-		(content: any) => {
-			if (editingMessage?.id) {
+		(id: string | undefined, payload: { content: MessageContent, createAt: Date }) => {
+			if (editingMessage?.id && editingMessage.id === id) {
 				setMsg((prev) =>
 					prev.map((m) =>
-						m.id === editingMessage.id ? { ...m, content } : m
+						m.id === editingMessage.id ? { ...m, ...payload } : m
 					)
 				);
 				setEditingMessage(null);
@@ -35,8 +35,8 @@ export function ChatPanel({
 				const newMessage: Message = {
 					id: crypto.randomUUID(), // 生成唯一ID
 					role: "user",
-					content,
-					createdAt: new Date(),
+					content: payload.content,
+					createdAt: payload.createAt || new Date(),
 				};
 				setMsg((prev) => [...prev, newMessage]);
 			}
